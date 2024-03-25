@@ -6,8 +6,4 @@ using System.Threading.Tasks;
 
 namespace Module15.Models;
 
-public class Manufacturer
-{
-    public string Name { get; set; }
-    public string Country { get; set; }
-}
+public record class Classroom(List<string> Students);

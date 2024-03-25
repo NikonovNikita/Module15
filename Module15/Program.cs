@@ -1,4 +1,5 @@
 ﻿using Module15.Models;
+using System.Linq;
 using System.Text;
 
 namespace Module15;
@@ -8,20 +9,23 @@ class Program
     static void Main(string[] args)
     {
         Console.OutputEncoding = Encoding.UTF8;
+
+        var classes = new[]
+        {
+            new Classroom(new List<string> {"Олег", "Алена", "Виктория"}),
+            new Classroom(new List<string> {"Анна", "Виктор", "Владимир"}),
+            new Classroom(new List<string> {"Булат", "Алекс", "Галина"})
+        };
+
+        var allStudents = GetAllStudents(classes);
+
+        Console.WriteLine(string.Join(' ', allStudents));
     }
 
-    static void DelayedExecuting(List<Student> students)
+    static string[] GetAllStudents(IEnumerable<Classroom> classes)
     {
-        var youngStudents = from s in students where s.Age < 25 select s;
+        var result = classes.SelectMany(c => c.Students).OrderBy(s => s).ToArray();
 
-        //Выполнится, когда мы обратимся к переменной youngStudents для получения результата
-    }
-
-    static void InstantExecuting(List<Student> students)
-    {
-        var youngStudents = (from s in students
-                            where s.Age < 25
-                            select s).ToList();
-
+        return result;
     }
 }
